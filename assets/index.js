@@ -28,19 +28,19 @@ function getSrc(block) {
 
 
 
-const status = document.getElementById('status');
+const cStatus = document.getElementById('status');
 if (window.FileList && window.File && window.FileReader) {
   document.getElementById('file-selector').addEventListener('change', event => {
     output.src = '';
-    status.textContent = '';
+    cStatus.textContent = '';
     const file = event.target.files[0];
     
 		if (!file.name) {
-      status.textContent = 'Error: The File.name property does not appear to be supported on this browser.';
+      cStatus.textContent = 'Error: The File.name property does not appear to be supported on this browser.';
       return;
     }
     if (!file.name.match('.*\.ipynb')) {
-      status.textContent = 'Error: The selected file does not appear to be an JypyterNotebook.'
+      cStatus.textContent = 'Error: The selected file does not appear to be an JypyterNotebook.'
       return;
     }
 
@@ -53,4 +53,6 @@ if (window.FileList && window.File && window.FileReader) {
     reader.readAsText(file);
     getMetadataForFileList(event.target.files)
   });
+} else {
+    cStatus.innerText = "Error browser incompatible with application";
 }
