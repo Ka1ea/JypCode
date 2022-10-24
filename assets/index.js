@@ -88,6 +88,13 @@ $(document).ready(function () {
         document.body.removeChild(element);
     }
 
+    const git = document.getElementById("git").addEventListener('mouseover', (event) => {
+        document.getElementById("git").classList.add('animate__tada');
+        setTimeout(() => {
+            document.getElementById("git").classList.remove("animate__tada"); 
+        }, 1000);
+    })
+
 
 
     if (window.FileList && window.File && window.FileReader) {
@@ -105,7 +112,7 @@ $(document).ready(function () {
                 
                 
                 if (!file.name.match('.*\.ipynb')) {
-                    alert('Error: The selected file does not appear to be an JypyterNotebook.');
+                    alert('Error: The wrong file format, please submit .ipynb files only.');
                     return;
                 }
                 
@@ -137,6 +144,11 @@ $(document).ready(function () {
                     button.style.background = '#6ECE3B';
                 }, 1000);
 
+            } else {
+                button.classList.add("animate__shakeX");
+                setTimeout(() => {
+                    button.classList.remove("animate__shakeX"); 
+                }, 1000);
             }
 
         });
