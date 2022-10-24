@@ -101,24 +101,29 @@ $(document).ready(function () {
 
             if (document.getElementById('file-selector').files[0] && isClickable) {
 
-                startUpload();
                 const file = document.getElementById('file-selector').files[0];
-
-
+                
+                
                 if (!file.name.match('.*\.ipynb')) {
                     alert('Error: The selected file does not appear to be an JypyterNotebook.');
                     return;
                 }
-
+                
                 const reader = new FileReader();
                 reader.addEventListener('load', event => {
+                    try{
+                        const json = event.target.result;
+                        const obj = JSON.parse(json);
+                        obj.cells.forEach(getSrc);
+                        var codeType = file.name.substring(0, file.name.length - 6) + obj.metadata.language_info.file_extension.toString()
+                        download(codeType, document.getElementById("temp").textContent);
+                        document.getElementById("temp").textContent = "";
+                        startUpload();
+                    } catch (err) { 
+                        alert("Error while parsing. Invalid format.");
+                        return;
+                    }
 
-                    const json = event.target.result;
-                    const obj = JSON.parse(json);
-                    obj.cells.forEach(getSrc);
-                    var codeType = file.name.substring(0, file.name.length - 6) + obj.metadata.language_info.file_extension.toString()
-                    download(codeType, document.getElementById("temp").textContent);
-                    document.getElementById("temp").textContent = "";
                 });
                 reader.readAsText(file);
 
@@ -129,7 +134,7 @@ $(document).ready(function () {
                 setTimeout(function () {
                     isClickable = true;
                     button.classList.toggle('active');
-                    document.getElementById("submit-button").style.background = '#6ECE3B';
+                    button.style.background = '#6ECE3B';
                 }, 1000);
 
             }
