@@ -9,7 +9,6 @@ $(document).ready(function () {
     var $syncing = $('.syncing');
     var $done = $('.done');
     var $bar = $('.bar');
-    var timeOut;
 
     $dropzone.on('drag dragstart dragend dragover dragenter dragleave drop', function (e) {
         e.preventDefault();
@@ -35,6 +34,17 @@ $(document).ready(function () {
         $('.dropzone .upload').hide();
     });
 
+
+    function reset() {
+        $('.dropzone .upload').toggle();
+        $syncing.toggle();
+        $done.removeClass('active');
+        $bar.removeClass('active');
+        $syncing.removeClass('active');
+        $dropzone.fadeIn();
+        $button.html('Upload');
+    }
+
     function startUpload() {
         if (!uploading && fileName != '') {
             uploading = true;
@@ -49,6 +59,7 @@ $(document).ready(function () {
 
     function showDone() {
         $button.html('Done');
+        uploading = false;
     }
 
 
@@ -82,6 +93,12 @@ $(document).ready(function () {
     if (window.FileList && window.File && window.FileReader) {
         var isClickable = true;
         const selector = document.getElementById('submit-button').addEventListener('click', () => {
+            const button = document.getElementById("submit-button");
+            if (button.textContent == 'Done') {
+                reset();
+                return;
+            }
+
             if (document.getElementById('file-selector').files[0] && isClickable) {
 
                 startUpload();
@@ -105,7 +122,7 @@ $(document).ready(function () {
                 });
                 reader.readAsText(file);
 
-                const button = document.getElementById("submit-button");
+                
                 button.style.background = '#5ca45c';
                 button.classList.toggle('active');
                 isClickable = false;
