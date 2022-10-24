@@ -1,15 +1,15 @@
-import fnmatch
+# import fnmatch
 import os
 import json
 
 """
 NotebookToCode.py
-Searches for the most recent jupyter notebook (by [first-last-projectXX] number) and creates a new file of just code
-Set serach = 1 if you want it to search the project directory instead
+Searches for the most recent jupyter notebook in downloads and creates a new file of just code
+Set path = 1 if you want it to search the project directory instead
 @author Kalea Gin
 @version 10/22/2022
 """
-path = 1
+path = 0
 
 
 if path == 1:
@@ -19,51 +19,52 @@ else:
 
 
 """
-Find
-Finds the file with the name in the directory of the path provided
+findPath
+Finds the most recent file with the name in the directory with the ending pattern specified
 src: https://stackoverflow.com/questions/1724693/find-a-file-in-python
-@param string name, string path
-@returns list string names
+@param string extension, string directory
+@returns most recent file
 """
-def findPaths(pattern, path):
-    result = []
-    for root, dirs, files in os.walk(path):
-        for name in files:
-            if fnmatch.fnmatch(name, pattern):
-                result.append(name)
-        
-    return result
+
+def findPath(extension, directory):
+    files = [os.path.join(directory, x) for x in os.listdir(directory) if x.endswith(extension)]
+    try:               #throws an error if no files found
+        newest = max(files, key = os.path.getctime)
+    except:
+        newest = -1
+    finally:
+        return newest
 
 def getNums(str):
-    return int(str[17:19])
+    try:
+        return int(str[17:19])
+    except:
+        return -1
 
 
 """
 Main
 """
-target = "*-*-[project]*.ipynb"
+target = ".ipynb"
+file = findPath(target, dir) 
 
-nbOptions = findPaths(target, dir)
-print(nbOptions)
-nums = list(map(getNums, nbOptions))
-recentNum = max(nums)
-print (recentNum)
-pathL = [i for i in nbOptions if i.__contains__(str(recentNum))]
-file = str(pathL[-1])
+#if file found
+if file == -1:
+    print("Error no file found")
+else:
+    with open(file, mode= "r", encoding= "utf-8") as f:
+        myfile = json.loads(f.read())
+        
+    code = []
+    for cell in myfile['cells']:
+        if cell['cell_type'] == 'code':
+            for line in cell['source']:
+                code.append(line)
 
-with open(os.path.join(dir, file), mode= "r", encoding= "utf-8") as f:
-    myfile = json.loads(f.read())
-    
-code = []
-for cell in myfile['cells']:
-    if cell['cell_type'] == 'code':
-        for line in cell['source']:
-            code.append(line)
+    codeFile = file[:-6]+myfile['metadata']['language_info']['file_extension']
 
-codeFile = file[:-6]+myfile['metadata']['language_info']['file_extension']
-
-with open(os.path.join(dir, codeFile), 'w') as cf:
-    for line in code:
-        cf.write(line + "\n")
-    
-print("Successfully completed!")
+    with open(codeFile, 'w') as cf:
+        for line in code:
+            cf.write(line + "\n")
+        
+    print("Successfully completed! Created new file: " + os.path.basename(codeFile))
