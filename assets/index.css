@@ -16,11 +16,21 @@ h3 {
 }
 
 
-.container{
+.linkcontainer{
     width: 56px;
     height: 50px;
     left: 172px;
     top: 405px;
+    position: absolute;
+}
+
+.footer{
+    font-size: xx-small;
+    text-align: center;
+    color: #aed2ae;
+    top:445px;
+    width: 220px;
+    left: 90px;
     position: absolute;
 }
 
