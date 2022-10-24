@@ -111,11 +111,10 @@ a:hover {
     box-sizing: border-box;
     display: table;
     table-layout: fixed;
-    width: -webkit-fill-available;
-    height: 80px;
-    top: 86px;
-    margin-right: 10%;
-    margin-left: 10%;
+    width: 200px;
+    margin-top: 25px;
+    height: 100px;
+    margin-left: 50px;
     border: 1px dashed #A4A4A4;
     border-radius: 3px;
     text-align: center;
