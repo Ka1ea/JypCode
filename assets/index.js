@@ -42,13 +42,12 @@ $(document).ready(function () {
             $dropzone.fadeOut();
             $syncing.addClass('active');
             $done.addClass('active');
-            $bar.addClass('active');    
+            $bar.addClass('active');
             timeoutID = window.setTimeout(showDone, 1000);
         }
     }
 
     function showDone() {
-
         $button.html('Done');
     }
 
@@ -58,7 +57,7 @@ $(document).ready(function () {
         if (block.cell_type == "code") {
             block.source.forEach((code) => {
                 document.getElementById("temp").textContent += "\n" + code;
-                console.log("\n" + code);
+                // console.log("\n" + code);
             })
         }
     }
@@ -81,30 +80,43 @@ $(document).ready(function () {
 
 
     if (window.FileList && window.File && window.FileReader) {
+        var isClickable = true;
         const selector = document.getElementById('submit-button').addEventListener('click', () => {
-            startUpload();
-            const file = document.getElementById('file-selector').files[0];
+            if (document.getElementById('file-selector').files[0] && isClickable) {
 
-            if (!file.name) {
-                alert('Error: The File.name property does not appear to be supported on this browser.');
-                return;
+                startUpload();
+                const file = document.getElementById('file-selector').files[0];
+
+
+                if (!file.name.match('.*\.ipynb')) {
+                    alert('Error: The selected file does not appear to be an JypyterNotebook.');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.addEventListener('load', event => {
+
+                    const json = event.target.result;
+                    const obj = JSON.parse(json);
+                    obj.cells.forEach(getSrc);
+                    var codeType = file.name.substring(0, file.name.length - 6) + obj.metadata.language_info.file_extension.toString()
+                    download(codeType, document.getElementById("temp").textContent);
+                    document.getElementById("temp").textContent = "";
+                });
+                reader.readAsText(file);
+
+                const button = document.getElementById("submit-button");
+                button.style.background = '#5ca45c';
+                button.classList.toggle('active');
+                isClickable = false;
+                setTimeout(function () {
+                    isClickable = true;
+                    button.classList.toggle('active');
+                    document.getElementById("submit-button").style.background = '#6ECE3B';
+                }, 1000);
+
             }
-            if (!file.name.match('.*\.ipynb')) {
-                alert('Error: The selected file does not appear to be an JypyterNotebook.');
-                return;
-            }
 
-            const reader = new FileReader();
-            reader.addEventListener('load', event => {
-
-                const json = event.target.result;
-                const obj = JSON.parse(json);
-                var allCode = obj.cells.forEach(getSrc);
-                var codeType = file.name.substring(0, file.name.length - 6) + obj.metadata.language_info.file_extension.toString()
-                download(codeType, document.getElementById("temp").textContent);
-                document.getElementById("temp").textContent = "";
-            });
-            reader.readAsText(file);
         });
-    } 
+    }
 });
