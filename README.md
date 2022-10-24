@@ -3,9 +3,7 @@
 
 ---
 
-Author: Kalea Gin
-Last Updated: 10/23/2022
-Version: 1.0
+Author: Kalea Gin | Last Updated: 10/23/2022 | Version: 1.0
 
 ---
 
