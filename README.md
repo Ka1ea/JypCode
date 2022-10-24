@@ -14,3 +14,5 @@ Extracts the code from the cells of a Jypyter Notebook and returns a code file o
 Alternate Python script in src if the website isn't working for any reason.
 
 Site template credit: https://codepen.io/roydigerhund/pen/ZQdbeN 
+Background credit: https://codepen.io/Rowno/pen/EVEgJb
+Title animation credit: https://codepen.io/alvarotrigo/pen/PoKMyzO
