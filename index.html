@@ -8,20 +8,40 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="text/javascript" src="assets/index.js" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/index.js"></script>
     <link href="assets/index.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 </head>
 
-<body>
-    <h1>
-        Read Jupyter Notebook Code
-    </h1>
-    <input type="file" id="file-selector">
-    <p id="status"></p>
-    <div>
-        <p id="output"></p>
+
+<div class="frame">
+    <h1>JypCode</h1>
+    <h3>Jupyter Notebook to Code extractor</h3>
+    <div class="center">
+          <div class="bar"></div>
+          <div class="title">Drop file to convert!</div>
+          <div class="dropzone">
+              <div class="content">
+                  <img src="https://100dayscss.com/codepen/upload.svg" class="upload">
+                  <span class="filename"></span>
+                  <input type="file" class="input" id="file-selector">
+              </div>
+          </div>
+          <img src="https://100dayscss.com/codepen/syncing.svg" class="syncing">
+          <img src="https://100dayscss.com/codepen/checkmark.svg" class="done">
+          <div class="upload-btn" id="submit-button">Upload file</div>
     </div>
-</body>
+    <div class="container">
+        <a href="https://github.com/Ka1ea/JypCode">Kalea Co</a>
+    </div>
+  </div>
+
+
+
+
+  <div id="temp" class="hidden"></div>
+
 
 </html>
