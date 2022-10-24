@@ -5,9 +5,9 @@ import json
 """
 NotebookToCode.py
 Searches for the most recent jupyter notebook in downloads and creates a new file of just code
-Set path = 1 if you want it to search the project directory instead
+Set path = 1 if you want it to search the directory the script is in instead
 @author Kalea Gin
-@version 10/22/2022
+@version 10/24/2022
 """
 path = 0
 
