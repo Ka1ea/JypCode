@@ -19,3 +19,4 @@ Credits:
 - Site template credit: https://codepen.io/roydigerhund/pen/ZQdbeN 
 - Background credit: https://codepen.io/Rowno/pen/EVEgJb
 - Title animation credit: https://codepen.io/alvarotrigo/pen/PoKMyzO
+- Animation credits: https://animate.style/
