@@ -1,10 +1,13 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400);
+@import url(https://fonts.googleapis.com/css?family=Indie+Flower:400);
 
 html,
 body {
     margin: 0;
     height: 100%;
-    overflow: hidden
+    overflow: hidden;
+    background: rgb(255,0,0);
+background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,151,0,1) 17%, rgba(243,255,0,1) 39%, rgba(7,255,0,1) 61%, rgba(0,7,255,1) 81%, rgba(169,0,255,1) 100%); 
 }
 
 html {
@@ -19,12 +22,16 @@ h1 {
     text-align: center;
     margin: 10px;
     margin-top: 1em;
+    font-family: "Indie Flower";
+    font-size: 40px;
+    color: pink;
 }
 
 h3 {
     text-align: center;
     margin: 5px;
     font-weight: normal;
+    font-family: "Indie Flower";
 }
 
 
