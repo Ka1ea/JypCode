@@ -12,6 +12,7 @@ Website: https://ka1ea.github.io/JypCode/
 Extracts the code from the cells of a Jypyter Notebook and returns a code file of just the code. 
 
 Alternate Python script in src if the website isn't working for any reason.
+Python script searches either the current directory or the downloads directory and chooses most recent file to convert.
 
 --- 
 
