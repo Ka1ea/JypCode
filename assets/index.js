@@ -67,9 +67,10 @@ $(document).ready(function () {
     function getSrc(block) {
         if (block.cell_type == "code") {
             block.source.forEach((code) => {
-                document.getElementById("temp").textContent += "\n" + code;
+                document.getElementById("temp").textContent += "\n" + code.trim();
                 // console.log("\n" + code);
             })
+            document.getElementById("temp").textContent += "\n";
         }
     }
 
