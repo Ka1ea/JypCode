@@ -21,15 +21,16 @@ $(document).ready(function () {
             $dropzone.removeClass('is-dragover');
         })
         .on('drop', function (e) {
-            droppedFiles = e.originalEvent.dataTransfer.files;
-            fileName = droppedFiles[0]['name'];
+            droppedFiles = e.originalEvent.dataTransfer.files[0];
+            fileName = droppedFiles['name'];
             $('.filename').html(fileName);
             $('.dropzone .upload').hide();
         });
 
 
     $("input:file").change(function () {
-        fileName = $(this)[0].files[0].name;
+        fileName = $(this)[0].files[0]['name'];
+        droppedFiles = $(this)[0].files[0];
         $('.filename').html(fileName);
         $('.dropzone .upload').hide();
     });
@@ -43,6 +44,24 @@ $(document).ready(function () {
         $syncing.removeClass('active');
         $dropzone.fadeIn();
         $button.html('Upload');
+        droppedFiles = false;
+        fileName = '';
+        clearfiles(document.getElementById("file-selector"));
+        $('.filename').html(fileName);
+    }
+
+    // https://stackoverflow.com/questions/1703228/how-can-i-clear-an-html-file-input-with-javascript
+    function clearfiles(f) {
+        try{
+            f.value = ''; //for IE11, latest Chrome/Firefox/Opera...
+        }catch(err){ }
+        if(f.value){ //for IE5 ~ IE10
+            var form = document.createElement('form'),
+                parentNode = f.parentNode, ref = f.nextSibling;
+            form.appendChild(f);
+            form.reset();
+            parentNode.insertBefore(f,ref);
+        }
     }
 
     function startUpload() {
@@ -68,7 +87,6 @@ $(document).ready(function () {
         if (block.cell_type == "code") {
             block.source.forEach((code) => {
                 document.getElementById("temp").textContent += "\n" + code.trim();
-                // console.log("\n" + code);
             })
             document.getElementById("temp").textContent += "\n";
         }
@@ -92,7 +110,7 @@ $(document).ready(function () {
     const git = document.getElementById("git").addEventListener('mouseover', (event) => {
         document.getElementById("git").classList.add('animate__tada');
         setTimeout(() => {
-            document.getElementById("git").classList.remove("animate__tada"); 
+            document.getElementById("git").classList.remove("animate__tada");
         }, 1000);
     })
 
@@ -107,35 +125,35 @@ $(document).ready(function () {
                 return;
             }
 
-            if (document.getElementById('file-selector').files[0] && isClickable) {
-
-                const file = document.getElementById('file-selector').files[0];
-                
-                
-                if (!file.name.match('.*\.ipynb')) {
-                    alert('Error: The wrong file format, please submit .ipynb files only.');
+            if (fileName && isClickable) {
+                if (!fileName.match('.*\.ipynb')) {
+                    alert('1Error: The wrong file format, please submit .ipynb files only.');
+                    button.classList.add("animate__shakeX");
+                    setTimeout(() => {
+                        button.classList.remove("animate__shakeX");
+                    }, 1000);
                     return;
                 }
-                
+
                 const reader = new FileReader();
                 reader.addEventListener('load', event => {
-                    try{
+                    try {
                         const json = event.target.result;
                         const obj = JSON.parse(json);
                         obj.cells.forEach(getSrc);
-                        var codeType = file.name.substring(0, file.name.length - 6) + obj.metadata.language_info.file_extension.toString()
+                        var codeType = fileName.substring(0, fileName.length - 6) + obj.metadata.language_info.file_extension.toString()
                         download(codeType, document.getElementById("temp").textContent);
                         document.getElementById("temp").textContent = "";
                         startUpload();
-                    } catch (err) { 
+                    } catch (err) {
                         alert("Error while parsing. Invalid format.");
                         return;
                     }
 
                 });
-                reader.readAsText(file);
+                reader.readAsText(droppedFiles);
 
-                
+
                 button.style.background = '#5ca45c';
                 button.classList.toggle('active');
                 isClickable = false;
@@ -148,7 +166,7 @@ $(document).ready(function () {
             } else {
                 button.classList.add("animate__shakeX");
                 setTimeout(() => {
-                    button.classList.remove("animate__shakeX"); 
+                    button.classList.remove("animate__shakeX");
                 }, 1000);
             }
 

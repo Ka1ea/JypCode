@@ -2,7 +2,6 @@
 
 
 body {
-    
     margin: 0;
     height: 100%;
     overflow: hidden;
@@ -12,11 +11,21 @@ background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,151,0,1) 17%, rg
 } */
 }
 
-div{
+.prevent-select {
+    -webkit-user-select: none;
+    /* Safari */
+    -ms-user-select: none;
+    /* IE 10 and IE 11 */
+    user-select: none;
+    /* Standard syntax */
+}
+
+div {
     font-family: "Poppins";
 }
 
-body:after, body:before {
+body:after,
+body:before {
     content: '';
     display: block;
     position: fixed;
@@ -27,44 +36,55 @@ body:after, body:before {
     background: rgba(0, 0, 0, 0.05);
     animation: background 90s linear infinite;
 }
+
 body:after {
     left: 15vw;
 }
+
 body:before {
     right: 15vw;
     animation-delay: -30s;
     animation-direction: reverse;
 }
+
 @keyframes theme {
     0% {
         background: #74c390;
-   }
+    }
+
     16% {
         background: #5dbdb6;
-   }
+    }
+
     33% {
         background: #59d4e1;
-   }
+    }
+
     50% {
         background: #51bce8;
-   }
+    }
+
     66% {
         background: #fa5374;
-   }
+    }
+
     83% {
         background: #e46653;
-   }
+    }
+
     100% {
         background: #74c390;
-   }
+    }
 }
+
 @keyframes background {
     0% {
         transform: rotate(0deg);
-   }
+    }
+
     100% {
         transform: rotate(360deg);
-   }
+    }
 }
 
 html {
@@ -83,61 +103,58 @@ h3 {
     font-size: medium;
 }
 
-h2{
-	font-family: "Poppins";
-	position:absolute;
-	font-size:65px;
+h2 {
+    font-family: "Poppins";
+    position: absolute;
+    font-size: 65px;
 }
 
-.titleContent{
+.titleContent {
     margin: 10px;
     display: flex;
-/* 	background: #000; */
-	min-height: 80px;
-	align-items: center;
-	justify-content: center;
+    /* 	background: #000; */
+    min-height: 80px;
+    align-items: center;
+    justify-content: center;
     position: relative;
 }
 
 .titleContent h2:nth-child(1) {
-	color: transparent;
-	-webkit-text-stroke: 2px white;
+    color: transparent;
+    -webkit-text-stroke: 2px white;
 }
 
 .titleContent h2:nth-child(2) {
-	color: white;
-	animation: animate 4s ease-in-out infinite;
+    color: white;
+    animation: animate 4s ease-in-out infinite;
 }
 
 @keyframes animate {
-	0%,
-	100% {
-		clip-path: polygon(
-			0% 45%,
-			16% 44%,
-			33% 50%,
-			54% 60%,
-			70% 61%,
-			84% 59%,
-			100% 52%,
-			100% 100%,
-			0% 100%
-		);
-	}
 
-	50% {
-		clip-path: polygon(
-			0% 60%,
-			15% 65%,
-			34% 66%,
-			51% 62%,
-			67% 50%,
-			84% 45%,
-			100% 46%,
-			100% 100%,
-			0% 100%
-		);
-	}
+    0%,
+    100% {
+        clip-path: polygon(0% 45%,
+                16% 44%,
+                33% 50%,
+                54% 60%,
+                70% 61%,
+                84% 59%,
+                100% 52%,
+                100% 100%,
+                0% 100%);
+    }
+
+    50% {
+        clip-path: polygon(0% 60%,
+                15% 65%,
+                34% 66%,
+                51% 62%,
+                67% 50%,
+                84% 45%,
+                100% 46%,
+                100% 100%,
+                0% 100%);
+    }
 }
 
 
